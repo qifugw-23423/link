@@ -11,9 +11,11 @@
         // 调用接口并获取重定向 URL
         fetch(`https://code.server.wangyinjie.cn/link/${code}`, {
             method: 'GET',
-            redirect: 'follow' // 自动跟随重定向
-        }).then(response => {
-            window.location.href = response.url; // 跳转到重定向地址
+            mode: 'cors', // 默认值，表示跨域请求
+        })
+            .then(response => response.json())
+            .then(data => {
+            window.location.href = data.url; // 跳转到重定向地址
         }).catch(error => {
             console.error('请求失败:', error);
         });
