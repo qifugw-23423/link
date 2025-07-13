@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>短链网页</title>
+    <style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+    iframe {
+        width: 100vw;
+        height: 100vh;
+        border: none; /* 可选：移除边框 */
+    }
+    </style>
     <script>        // 获取当前页面的查询参数 id
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
@@ -15,6 +27,13 @@
             .then(response => response.json())
             .then(data => {
             window.location.href = data.url; // 跳转到重定向地址
+             // 等待 DOM 加载完成后操作 iframe
+    window.addEventListener('DOMContentLoaded', function () {
+        const iframe = document.querySelector('iframe');
+        if (iframe && id) {
+            iframe.src = data.url;
+        }
+    });
         }).catch(error => {
             console.error('请求失败:', error);
         });
@@ -24,5 +43,6 @@
     </script>
 </head>
 <body>
+     <iframe src="" title="短链网页"></iframe>
 </body>
 </html>
